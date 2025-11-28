@@ -134,6 +134,8 @@ document.addEventListener('click', handleSmoothScroll);
 
 const heroVisual = document.querySelector('.hero-visual');
 const heroSection = document.querySelector('.hero');
+const coffeeScene = document.querySelector('.coffee-scene');
+const coffeeMugSVG = document.querySelector('.coffee-mug-svg');
 
 window.addEventListener('scroll', () => {
     if (window.innerWidth > 768 && heroSection) {
@@ -146,6 +148,39 @@ window.addEventListener('scroll', () => {
         }
     }
 });
+
+// ============================================
+// Coffee Mug Hover Interactions
+// ============================================
+
+if (coffeeScene) {
+    coffeeScene.addEventListener('mouseenter', () => {
+        if (coffeeMugSVG) {
+            coffeeMugSVG.style.animation = 'mugTilt 0.6s ease-in-out forwards';
+        }
+        coffeeScene.style.animation = 'none';
+    });
+
+    coffeeScene.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+            const rect = coffeeScene.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) * 0.05;
+            const y = (e.clientY - rect.top - rect.height / 2) * 0.05;
+            
+            if (coffeeMugSVG) {
+                coffeeMugSVG.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
+            }
+        }
+    });
+
+    coffeeScene.addEventListener('mouseleave', () => {
+        if (coffeeMugSVG) {
+            coffeeMugSVG.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            coffeeMugSVG.style.animation = 'mugRotate 20s ease-in-out infinite';
+        }
+        coffeeScene.style.animation = 'subtleFloat 4s ease-in-out infinite';
+    });
+}
 
 // ============================================
 // Enhanced Interactive Elements
